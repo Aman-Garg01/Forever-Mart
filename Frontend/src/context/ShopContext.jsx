@@ -16,7 +16,9 @@ export const ShopContextProvider = (props) => {
   const [showsearch, setShowsearch] = useState(false)
   const [cartItem, setCartItem] = useState({});
   const [products, setProducts] = useState([])
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false)
+  const [userData, setUserData] = useState(false)
+
   const navigate = useNavigate()
 
   const addToCart = async (itemId, size) => {
@@ -139,6 +141,34 @@ export const ShopContextProvider = (props) => {
     }
   }
 
+  // get user data for profile  
+
+  const loadUserProfileData = async () => {
+    try {
+
+      const { data } = await axios.get(backEndUrl + '/api/user/get-profile', { headers: { token } })
+
+      if (data.success) {
+        setUserData(data.userData)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  }
+
+
+  useEffect(() => {
+    if (token) {
+      loadUserProfileData()
+    } else {
+      setUserData(false)
+    }
+  }, [token])
+
+
   useEffect(() => {
     getProductData()
   }, [])
@@ -153,7 +183,7 @@ export const ShopContextProvider = (props) => {
   const value = {
     products, currency, delivery_fee,
     search, setSearch, showsearch, setShowsearch, cartItem, setCartItem, addToCart, getCartCount,
-    updateQuantity, getCartAmount, navigate, backEndUrl, setToken, token
+    updateQuantity, getCartAmount, navigate, backEndUrl, setToken, token, loadUserProfileData, userData, setUserData
   }
 
   return (

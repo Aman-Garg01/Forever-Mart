@@ -3,10 +3,12 @@ import { assets } from '../assets/assets'
 import { NavLink, Link } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 
+
+
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
-  const { setShowsearch, getCartCount, navigate, token, setToken, setCartItem } = useContext(ShopContext)
+  const { setShowsearch, getCartCount, navigate, token, setToken, setCartItem, userData } = useContext(ShopContext)
 
   const logout = () => {
     localStorage.removeItem('token')
@@ -14,6 +16,9 @@ const Navbar = () => {
     setCartItem({})
     navigate('/login')
   }
+
+
+
 
 
 
@@ -44,18 +49,33 @@ const Navbar = () => {
         <NavLink to='/collection'>
           <img onClick={() => setShowsearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="icon" />
         </NavLink>
-        <div className='group relative'>
-          <img onClick={() => token ? null : navigate('/login')} src={assets.profile_icon} className='w-5 cursor-pointer' alt="icon" />
+        <div className='flex items-center gap-4'>
+          {/* <img onClick={() =>  token ? null : navigate('/login')} src={assets.profile_icon} className='w-5 cursor-pointer' alt="icon" /> */}
 
           {/* Dropdown Menu */}
-          {token &&
+          {/* {token &&
             <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
               <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
-                <p className='cursor-pointer hover:text-black'>My Profile</p>
+                <NavLink to='/profile' className='cursor-pointer hover:text-black'>My Profile</NavLink>
                 <p onClick={() => navigate('/order')} className='cursor-pointer hover:text-black'>Orders</p>
                 <p onClick={logout} className='cursor-pointer hover:text-black'>LogOut</p>
               </div>
             </div>
+          } */}
+          {
+            token && userData &&
+              <div className='flex items-center gap-2 cursor-pointer group relative'>
+                <img className='w-8 rounded-full' src={userData.image} alt="" />
+
+                <div className='absolute top-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>
+                  <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
+                    <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
+                    <p onClick={() => navigate('/order')} className='hover:text-black cursor-pointer'>Orders</p>
+                    <p onClick={logout} className='hover:text-black cursor-pointer'>Logout</p>
+                  </div>
+                </div>
+              </div>
+           
           }
 
         </div>
