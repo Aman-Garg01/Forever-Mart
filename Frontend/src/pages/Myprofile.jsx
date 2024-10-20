@@ -40,8 +40,8 @@ function Myprofile() {
   }
 
   return userData && (
-    <div className='bg-gray-100 sm:bg-transparent flex flex-col items-center p-10'>
-      <div className='sm:min-w-96 w-80 flex flex-col items-center justify-center gap-2 text-sm bg-white border border-gray-300 rounded-xl p-12 shadow-xl'>
+    <div className='bg-gray-200 sm:bg-transparent flex flex-col items-center sm:p-10 py-8'>
+      <div className='sm:min-w-96 w-72 flex flex-col items-center justify-center gap-2 text-sm bg-white border border-gray-300 rounded-xl p-10 shadow-xl'>
         {
           isEdit
             ? <label htmlFor="image">
