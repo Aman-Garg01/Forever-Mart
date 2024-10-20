@@ -14,7 +14,7 @@ const Navbar = () => {
     localStorage.removeItem('token')
     setToken('')
     setCartItem({})
-    navigate('/login')
+    // navigate('/login')
   }
 
 
@@ -50,20 +50,11 @@ const Navbar = () => {
           <img onClick={() => setShowsearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="icon" />
         </NavLink>
         <div className='flex items-center gap-4'>
-          {/* <img onClick={() =>  token ? null : navigate('/login')} src={assets.profile_icon} className='w-5 cursor-pointer' alt="icon" /> */}
 
           {/* Dropdown Menu */}
-          {/* {token &&
-            <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
-              <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
-                <NavLink to='/profile' className='cursor-pointer hover:text-black'>My Profile</NavLink>
-                <p onClick={() => navigate('/order')} className='cursor-pointer hover:text-black'>Orders</p>
-                <p onClick={logout} className='cursor-pointer hover:text-black'>LogOut</p>
-              </div>
-            </div>
-          } */}
+
           {
-            token && userData &&
+            token && userData ?
               <div className='flex items-center gap-2 cursor-pointer group relative'>
                 <img className='w-8 rounded-full' src={userData.image} alt="" />
 
@@ -75,7 +66,8 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-           
+              : <button onClick={() => navigate('/login')} className='bg-black text-white px-4 py-3 rounded-full text-xs font-light '>Create account</button>
+
           }
 
         </div>
